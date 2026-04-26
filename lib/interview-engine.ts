@@ -1,4 +1,127 @@
-import { getMilestoneFields, type ApplicantProfile, type ApplicationTrack, type GksField, type GksFieldId } from './gks-schema'
+import {
+  getMilestoneFields,
+  type ApplicantProfile,
+  type ApplicationTrack,
+  type GksField,
+  type GksFieldId,
+} from './gks-schema'
+
+export type InterviewPhaseId =
+  | 'identity'
+  | 'contact'
+  | 'application'
+  | 'education'
+  | 'university-choices'
+  | 'language'
+  | 'essays'
+  | 'consent-medical'
+
+export interface InterviewPhasePlan {
+  id: InterviewPhaseId
+  label: string
+  description: string
+  currentField: GksField
+  pendingFieldIds: GksFieldId[]
+  pendingFieldLabels: string[]
+  completedFieldCount: number
+  totalFieldCount: number
+}
+
+const INTERVIEW_PHASE_METADATA: Record<InterviewPhaseId, { label: string; description: string }> = {
+  identity: {
+    label: 'Identity Details',
+    description: 'Collect the applicant’s official personal identity information.',
+  },
+  contact: {
+    label: 'Contact Details',
+    description: 'Collect the applicant’s address, phone number, and email address.',
+  },
+  application: {
+    label: 'Application Basics',
+    description: 'Confirm track, application type, degree, and study field choices.',
+  },
+  education: {
+    label: 'Education History',
+    description: 'Collect the applicant’s academic institution and graduation details.',
+  },
+  'university-choices': {
+    label: 'University Choices',
+    description: 'Collect the intended university, field, and department choices.',
+  },
+  language: {
+    label: 'Language Background',
+    description: 'Collect the applicant’s available language test information.',
+  },
+  essays: {
+    label: 'Essay Materials',
+    description: 'Collect the personal statement and study plan content.',
+  },
+  'consent-medical': {
+    label: 'Consent and Medical',
+    description: 'Collect the final consent confirmation and medical checklist status.',
+  },
+}
+
+export const getInterviewPhaseId = (fieldId: GksFieldId): InterviewPhaseId => {
+  switch (fieldId) {
+    case 'form1.section1.applicationTrack':
+    case 'form1.section2.applicationType':
+    case 'form1.section3.degree':
+    case 'form1.section4.fieldOfStudy':
+      return 'application'
+    case 'form1.section5.familyName':
+    case 'form1.section5.givenName':
+    case 'form1.section5.middleName':
+    case 'form1.section5.dateOfBirth':
+    case 'form1.section5.gender':
+    case 'form1.section5.citizenship':
+    case 'form1.section5.koreanCitizenshipApplicant':
+    case 'form1.section5.koreanCitizenshipParents':
+      return 'identity'
+    case 'form1.section5.address':
+    case 'form1.section5.phone':
+    case 'form1.section5.email':
+      return 'contact'
+    case 'form1.section6.topikLevel':
+      return 'language'
+    case 'form1.section7.highSchoolName':
+    case 'form1.section7.highSchoolLocation':
+    case 'form1.section7.highSchoolPeriod':
+    case 'form1.section7.highSchoolGraduationDate':
+    case 'form1.section7.associateInstitutionName':
+    case 'form1.section7.associateInstitutionLocation':
+    case 'form1.section7.associateInstitutionPeriod':
+    case 'form1.section7.associateInstitutionGraduationDate':
+      return 'education'
+    case 'form1.section9.embassyChoice1.university':
+    case 'form1.section9.embassyChoice1.fieldOfStudy':
+    case 'form1.section9.embassyChoice1.department':
+    case 'form1.section9.embassyChoice1.other':
+    case 'form1.section9.embassyChoice2.university':
+    case 'form1.section9.embassyChoice2.fieldOfStudy':
+    case 'form1.section9.embassyChoice2.department':
+    case 'form1.section9.embassyChoice2.other':
+    case 'form1.section9.embassyChoice3.university':
+    case 'form1.section9.embassyChoice3.fieldOfStudy':
+    case 'form1.section9.embassyChoice3.department':
+    case 'form1.section9.embassyChoice3.other':
+    case 'form1.section9.universityChoice.university':
+    case 'form1.section9.universityChoice.fieldOfStudy':
+    case 'form1.section9.universityChoice.department':
+    case 'form1.section9.universityChoice.other':
+      return 'university-choices'
+    case 'form2.section1.personalStatement':
+    case 'form3.section1.languageStudyPlan':
+    case 'form3.section2.goalStudyPlan':
+    case 'form3.section3.futurePlan':
+      return 'essays'
+    case 'form5.section1.consentGroup':
+    case 'form6.section1.medicalChecklist':
+      return 'consent-medical'
+    default:
+      return 'application'
+  }
+}
 
 export const isFieldAnswered = (profile: Partial<ApplicantProfile>, fieldId: GksFieldId): boolean => {
   switch (fieldId) {
@@ -173,6 +296,51 @@ export const selectNextQuestion = (profile: Partial<ApplicantProfile>, track: Ap
   return null;
 }
 
+export const planInterviewPhase = (
+  profile: Partial<ApplicantProfile>,
+  track: ApplicationTrack,
+): InterviewPhasePlan | null => {
+  const currentField = selectNextQuestion(profile, track)
+
+  if (!currentField) {
+    return null
+  }
+
+  const phaseId = getInterviewPhaseId(currentField.id as GksFieldId)
+  const phaseFields = getMilestoneFields(track, profile).filter(
+    (field) => getInterviewPhaseId(field.id as GksFieldId) === phaseId,
+  )
+  const pendingFields = phaseFields.filter((field) => !isFieldAnswered(profile, field.id as GksFieldId))
+  const metadata = INTERVIEW_PHASE_METADATA[phaseId]
+
+  return {
+    id: phaseId,
+    label: metadata.label,
+    description: metadata.description,
+    currentField,
+    pendingFieldIds: pendingFields.map((field) => field.id as GksFieldId),
+    pendingFieldLabels: pendingFields.map((field) => field.fieldLabel),
+    completedFieldCount: phaseFields.length - pendingFields.length,
+    totalFieldCount: phaseFields.length,
+  }
+}
+
 export const getDeterministicKoreanQuestion = (field: GksField): string => {
-  return `다음으로 ${field.fieldLabel} 항목을 입력해 주세요.`;
+  if (field.id === 'form5.section1.consentGroup') {
+    return 'Please confirm that you accept all 15 agreement items before we continue.'
+  }
+
+  if (field.id === 'form6.section1.medicalChecklist') {
+    return 'Do you have any medical condition or history that should be marked yes on the medical checklist?'
+  }
+
+  if (field.fieldType === 'checkbox') {
+    return `Please choose the option that best matches your ${field.fieldLabel.toLowerCase()}.`
+  }
+
+  if (field.fieldType === 'date') {
+    return `Please provide your ${field.fieldLabel} in YYYY-MM-DD format.`
+  }
+
+  return `Please provide your ${field.fieldLabel}.`
 }
