@@ -238,7 +238,7 @@ Final Wave: F1-F4 verification agents in parallel
 
   **Commit**: YES | Message: `feat(ai): add consent gated provider adapter` | Files: AI adapter, API route, consent tests
 
-- [ ] 4. Implement single local applicant profile persistence
+- [x] 4. Implement single local applicant profile persistence
 
   **What to do**: Implement a single `ApplicantProfile` store for the web app using browser local storage with schema versioning, migration placeholder, export JSON, and reset/delete. Store only one active profile. Add a visible privacy note that data is stored locally in this browser for Milestone 1. Add tests for save/load/reset and corrupted stored JSON recovery.
   **Must NOT do**: Do not add cloud storage, user accounts, multi-profile switching, or server-side persistence of PII.

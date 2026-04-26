@@ -199,6 +199,12 @@ project-root/
 ### Key Commands
 - `npm run dev` — Start Next.js dev server (Turbopack by default)
 
+## 2026-04-26 Profile Store Notes
+- Single-profile persistence works best as one JSON blob under a fixed key (`oh-my-scholarship-profile`) with a top-level `_version` wrapper and the actual `ApplicantProfile` payload nested inside.
+- Corrupted JSON should fail closed to `{}`; export can safely re-serialize the current loaded profile so the UI gets a deterministic download string.
+- In this repo's test runtime, `localStorage` was not reliable enough to use directly, so a tiny in-memory `ProfileStorageLike` shim kept the store logic testable without changing the browser-facing behavior.
+- The privacy note is exposed as a shared constant and rendered on the home page so later UI work can reuse the exact Milestone 1 wording.
+
 ## 2026-04-26 Task 3 AI Adapter Learnings
 - `lib/gks-schema.ts` already exposes `getFieldById`, so AI payload minimization can stay schema-driven instead of duplicating field labels or validation metadata elsewhere.
 - For privacy-safe prompting, `minimizePayload(profile, currentFieldId)` should return only the active field metadata plus a field-specific `profileExcerpt`; this prevents sending unrelated profile sections such as address, email, or essay content by default.

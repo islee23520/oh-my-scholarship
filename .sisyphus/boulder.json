@@ -50,6 +50,15 @@
       "agent": "Sisyphus-Junior",
       "category": "deep",
       "updated_at": "2026-04-26T04:13:43.296Z"
+    },
+    "todo:4": {
+      "task_key": "todo:4",
+      "task_label": "4",
+      "task_title": "Implement single local applicant profile persistence",
+      "session_id": "ses_23800ab52ffeOgtQvLnCyZQ12L",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-26T04:17:49.549Z"
     }
   }
 }
