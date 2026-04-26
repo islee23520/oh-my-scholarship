@@ -1,8 +1,11 @@
 .env
 .env.local
 .env.*
+!.env.example
+!.env.sample
 node_modules/
 .next/
+*.tsbuildinfo
 coverage/
 playwright-report/
 test-results/
@@ -17,3 +20,4 @@ docx-output/
 *.docx
 .playwright-mcp/
 .sisyphus/
+.DS_Store
