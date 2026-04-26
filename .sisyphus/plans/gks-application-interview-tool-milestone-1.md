@@ -198,7 +198,7 @@ Final Wave: F1-F4 verification agents in parallel
 
   **Commit**: YES | Message: `feat(schema): add gks form field inventory` | Files: schema modules and tests
 
-- [ ] 3. Implement consent-gated AI adapter with mock provider
+- [x] 3. Implement consent-gated AI adapter with mock provider
 
   **What to do**: Add AI service abstraction with `mock` provider as default for tests and provider-agnostic real adapter configured only via `.env.local`. Add consent state that must be true before any AI API route sends data. Add request minimization so payload includes only current field, current answer, active validation context, and explicitly selected essay facts; never include the entire completed profile by default. Add tests proving no AI call occurs without consent and payload minimization holds.
   **Must NOT do**: Do not commit `.env.local`. Do not log raw applicant answers. Do not allow LLM to validate eligibility or edit DOCX.

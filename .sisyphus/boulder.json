@@ -41,6 +41,15 @@
       "agent": "Sisyphus-Junior",
       "category": "deep",
       "updated_at": "2026-04-26T04:06:48.248Z"
+    },
+    "todo:3": {
+      "task_key": "todo:3",
+      "task_label": "3",
+      "task_title": "Implement consent-gated AI adapter with mock provider",
+      "session_id": "ses_23806057bffeR5KCvVaThI13uQ",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-04-26T04:13:43.296Z"
     }
   }
 }

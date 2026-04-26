@@ -198,6 +198,12 @@ project-root/
 
 ### Key Commands
 - `npm run dev` — Start Next.js dev server (Turbopack by default)
+
+## 2026-04-26 Task 3 AI Adapter Learnings
+- `lib/gks-schema.ts` already exposes `getFieldById`, so AI payload minimization can stay schema-driven instead of duplicating field labels or validation metadata elsewhere.
+- For privacy-safe prompting, `minimizePayload(profile, currentFieldId)` should return only the active field metadata plus a field-specific `profileExcerpt`; this prevents sending unrelated profile sections such as address, email, or essay content by default.
+- Vitest/jsdom remains unsuitable for direct Next.js Route Handler behavior checks, so Task 3 verification is best anchored in unit tests for `ConsentGatedAIAdapter` and `minimizePayload`, while the route files stay thin wrappers around the service.
+- A mock-first adapter works cleanly in this repo: default to `MockAIProvider` unless `process.env.OPENAI_API_KEY` exists, which keeps tests offline and allows `.env.local`-only real-provider configuration.
 - `npm run test` — Run Vitest in watch mode
 - `npm run test:ui` — Run Vitest with UI dashboard
 - `npm run e2e` — Run Playwright tests (headless)
