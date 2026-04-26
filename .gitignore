@@ -15,3 +15,5 @@ generated/
 generated-docx/
 docx-output/
 *.docx
+.playwright-mcp/
+.sisyphus/
