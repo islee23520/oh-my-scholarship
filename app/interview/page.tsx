@@ -70,8 +70,7 @@ export default function InterviewPage() {
 
       const result = (await response.json()) as InterviewResult
       setQuestionText(result.question)
-    } catch (error) {
-      console.error('AI generation failed:', error)
+    } catch {
       setIsAiFallback(true)
       setQuestionText(getDeterministicKoreanQuestion(nextField))
     } finally {

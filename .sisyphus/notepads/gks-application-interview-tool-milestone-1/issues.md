@@ -169,3 +169,16 @@ Multiple synchronous `task()` delegations for Task 1 aborted before making file 
 ## Task 5: Implement one-question interview UI/engine
 - Encountered a type error when passing `nextField.id` to `InterviewRequest` because `GksField.id` is typed as `string` instead of `GksFieldId`. Fixed by casting `as GksFieldId`.
 - The smoke test failed because the heading on the `/interview` page changed from "Interview" to "인터뷰 시작". Updated the smoke test to expect the new heading.
+
+
+## 2026-04-26 F2 code quality review
+- Review verdict: REJECT. Main quality issue is duplicated field/profile mapping logic across `validation`, `interview-engine`, and `ai-adapter`, which raises drift risk and reads like copy-paste/generated structure rather than a stable shared boundary.
+- `ProfileStore.load()` silently swallows corrupted JSON and returns an empty profile (`lib/profile-store.ts:70-80`), so persisted-state failure is handled non-fatally but without signal or cleanup.
+- Strict mode is enabled and LSP diagnostics were clean, but `GksField.id` remains typed as `string`, which forces downstream `as GksFieldId` assertions instead of preserving the stronger schema type.
+
+## 2026-04-26 F1 Plan Compliance Audit
+- F1 audit result: REJECT.
+- Task 4 acceptance is not complete: `ProfileStore.reset()` exists, but no user-visible reset flow or `reset-profile`/`confirm-reset` hooks were found in the app.
+- Plan Must Have `real provider configured only through .env.local` is not enforced; current code enables the real provider from any `process.env.OPENAI_API_KEY` source.
+- Strict audit roll-up `No PII in logs/git/tests` failed because tests include synthetic-but-PII-shaped fixtures and `app/interview/page.tsx` still logs runtime errors with `console.error(...)`.
+- Task 8 ignored-output-path rule is only demonstrated by tests under `.generated/`; `renderRepresentativeProof()` itself does not constrain the output path.

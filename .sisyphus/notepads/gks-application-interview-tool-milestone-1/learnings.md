@@ -588,3 +588,14 @@ __fixtures__/generated/
 - `readyForDocxProof` intentionally means all active required Milestone 1 fields are present and valid; it is not a final submission readiness flag.
 - Report UI now reads the saved browser profile through `ProfileStore`, shows Milestone 1 DOCX proof readiness, and adds a non-blocking phone country-code hint when the saved phone value does not start with `+`.
 - Verification passed for Task 6: zero LSP diagnostics on `lib/validation.ts`, `lib/validation.test.ts`, and `app/report/page.tsx`; `npm run test -- --run validation`; `npm run test -- --run`; `npx tsc --noEmit`; `npm run build`.
+
+
+## 2026-04-26 F2 code quality review
+- Workspace LSP diagnostics for the reviewed TS/TSX files returned zero diagnostics, and grep found no `as any`, `@ts-ignore`, `@ts-expect-error`, `console.log`, `eval`, `Function`, or hardcoded-secret matches in the application scope.
+- Import graph scan over `lib/*.ts`, `app/**/*.tsx`, and API routes found zero cycles; provider-specific OpenAI/env/fetch usage remained isolated to `lib/ai-adapter.ts`.
+
+## 2026-04-26 F1 Plan Compliance Audit
+- For this milestone, passing tests/build is not enough for plan compliance; UI-level requirements like reset/delete flow still need explicit implementation evidence.
+- If the plan says a real provider must be configured only through `.env.local`, reading a generic `process.env.OPENAI_API_KEY` is not strong enough to prove compliance.
+- A strict privacy audit distinguishes between “no real applicant data” and “no PII-shaped fixtures in tests/logs”; those are different bars and should be treated separately.
+- When a plan says output must stay under ignored/generated paths, the constraint should be enforced in the production code path, not only in tests.

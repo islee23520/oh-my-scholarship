@@ -86,6 +86,14 @@
       "agent": "Sisyphus-Junior",
       "category": "deep",
       "updated_at": "2026-04-26T04:46:35.595Z"
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "Plan Compliance Audit — oracle",
+      "session_id": "ses_237dd5901ffeTCWYoEqzVghf52",
+      "agent": "oracle",
+      "updated_at": "2026-04-26T05:00:16.896Z"
     }
   }
 }

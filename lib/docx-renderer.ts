@@ -80,6 +80,11 @@ export const renderRepresentativeProof = async (
   outputPath: string,
   data: ProofData,
 ) => {
+  const normalizedOutput = path.resolve(outputPath)
+  if (!normalizedOutput.includes(`${path.sep}.generated`) && !normalizedOutput.includes('/.generated')) {
+    throw new Error('DOCX proof output must be written under .generated/ directory')
+  }
+
   const outputDir = path.dirname(outputPath)
   const templateBuffer = await fs.readFile(templatePath)
 

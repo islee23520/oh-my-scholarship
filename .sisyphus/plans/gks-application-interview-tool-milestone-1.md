@@ -363,7 +363,7 @@ Final Wave: F1-F4 verification agents in parallel
 
   **Commit**: YES | Message: `feat(validation): add gks completeness report` | Files: validators, report UI, tests
 
-- [ ] 7. Implement FORM 2/3 editable AI draft assistant
+- [x] 7. Implement FORM 2/3 editable AI draft assistant
 
   **What to do**: Add essay draft route/section for FORM 2 Personal Statement and FORM 3 Study Plan. Use confirmed profile facts and user-provided bullet answers to call AI only after consent. Generate editable drafts with labels: “초안 — 반드시 사용자가 검토/수정해야 함”. Support Korean or English draft mode. Store accepted draft text only after user clicks `[data-testid="accept-draft"]`. Add tests that draft generation uses minimal facts, does not claim admission success, and handles AI failure with a retry/fallback prompt.
   **Must NOT do**: Do not generate final unreviewed essays. Do not fabricate awards, experiences, grades, publications, or medical facts. Do not write recommendation letters.
@@ -405,7 +405,7 @@ Final Wave: F1-F4 verification agents in parallel
 
   **Commit**: YES | Message: `feat(essays): add editable ai draft assistant` | Files: essay UI, draft service, tests
 
-- [ ] 8. Implement DOCX structure inventory and representative fill proof
+- [x] 8. Implement DOCX structure inventory and representative fill proof
 
   **What to do**: Add a read-only DOCX inspection script for `/Users/ilseoblee/Downloads/★2026 GKS-U Application Forms (1).docx` that extracts document XML/text inventory into a generated ignored artifact. Implement deterministic representative proof renderer using the supplied template or a test fixture copy. Fill only representative fields: full name text `HONG GIL DONG`, date `2007-03-14`, one checked Application Track or agreement checkbox marker, and one multiline FORM 2/3 draft text. Generate a completion report JSON next to output. Add tests that unzip generated DOCX and inspect XML/text for expected synthetic values.
   **Must NOT do**: Do not claim all fields are mapped. Do not modify the original DOCX in Downloads. Do not let AI modify DOCX. Do not commit generated filled forms.

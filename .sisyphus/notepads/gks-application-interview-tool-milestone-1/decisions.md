@@ -16,3 +16,7 @@
 - Kept draft safety checking deterministic via regex flags for guarantee/success claims instead of trying to block or rewrite text heuristically.
 - Preserved the schema shape by saving accepted FORM 2 text to `profile.form2PersonalStatement` and accepted FORM 3 text to `profile.form3StudyPlan.{languageStudyPlan,goalStudyPlan,futurePlan}` only after explicit accept.
 - Fixed `lib/interview-engine.ts` strict type assignments while validating this task because `next build` surfaced existing `unknown` assignment errors that would otherwise block shipment.
+
+## 2026-04-26 F1 Plan Compliance Audit
+- Recorded F1 verdict as REJECT because explicit plan requirements are still unmet, even though the handoff context says build/tests/e2e/privacy scan passed.
+- Treated the plan's exact Must Have list and the task's stricter privacy roll-up as separate checks: the repo appears free of real applicant data, but it still fails the stricter “no PII in logs/git/tests” interpretation.
