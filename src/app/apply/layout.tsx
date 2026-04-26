@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SECTIONS } from "@/lib/wizard/types";
+import { SupportChat } from "@/components/wizard/SupportChat";
 
 const LABELS: Record<(typeof SECTIONS)[number], string> = {
   track: "Track",
@@ -15,7 +16,7 @@ const LABELS: Record<(typeof SECTIONS)[number], string> = {
 
 export default function ApplyLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto flex max-w-6xl gap-8 px-6 py-10">
+    <div className="mx-auto flex max-w-7xl gap-8 px-6 py-10">
       <aside className="hidden w-56 shrink-0 lg:block">
         <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">
           GKS 2026 Application
@@ -33,6 +34,9 @@ export default function ApplyLayout({ children }: { children: React.ReactNode })
         </nav>
       </aside>
       <main className="min-w-0 flex-1">{children}</main>
+      <div className="hidden lg:block">
+        <SupportChat />
+      </div>
     </div>
   );
 }
