@@ -199,6 +199,13 @@ project-root/
 ### Key Commands
 - `npm run dev` — Start Next.js dev server (Turbopack by default)
 
+## 2026-04-26 Task 7 Essay draft assistant
+- `lib/essay-draft-service.ts` now centralizes FORM 2/3 draft generation, deterministic safety checks, fallback prompt generation, and accept-time persistence.
+- Draft generation uses `minimizePayload(profile, fieldId)` plus a small whitelist of relevant profile facts and user bullets; email/address/medical fields are intentionally excluded from AI facts.
+- `/interview/drafts` keeps generated text in local component state only; nothing is written to `ProfileStore` until `[data-testid="accept-draft"]` is clicked.
+- FORM 3 accept flow stores into all three `form3StudyPlan` subfields; when section headings are present they are split, otherwise the accepted text is copied into each subfield to avoid silent data loss.
+- Vitest needed explicit `@` alias resolution in `vitest.config.ts` for app-level tests that import project aliases.
+
 ## 2026-04-26 Profile Store Notes
 - Single-profile persistence works best as one JSON blob under a fixed key (`oh-my-scholarship-profile`) with a top-level `_version` wrapper and the actual `ApplicantProfile` payload nested inside.
 - Corrupted JSON should fail closed to `{}`; export can safely re-serialize the current loaded profile so the UI gets a deterministic download string.
@@ -217,7 +224,13 @@ project-root/
 - `npm run build && npm run start` — Production build + server
 
 ## 2026-04-26 Task 2 Schema Foundation
+ 
 
+## 2026-04-26 Task 8 DOCX Representative Proof
+- `jszip` alone is sufficient for Milestone 1 DOCX proof work: the renderer can copy the template, replace only `word/document.xml` in the copied archive, and leave the original DOCX hash/mtime unchanged.
+- A read-only inventory pass is easiest when it stores XML/text parts verbatim and derives a lightweight form map from visible headings (`FORM 1`-`FORM 6`) plus synthetic placeholder markers like `[[form1.section5.givenName]]`.
+- Representative proof should stay explicit and narrow: append a clearly synthetic block with `HONG GIL DONG`, `2007-03-14`, one checked Wingdings marker (`F0FE`), and multiline draft text rather than pretending to map the full template.
+- CLI coverage is practical with `scripts/docx-inspect.mjs` writing JSON under `.generated/`, while tests can call it via `child_process.execFile` and inspect the emitted inventory file.
 - Added `lib/gks-schema.ts` as the canonical 2026 GKS-U schema inventory module with strict exported types (`GksField`, `GksFieldId`, `ApplicantProfile`, `LanguagePolicy`, `TrackCondition`, `FieldStatus`) and pure TypeScript helpers only.
 - Inventory coverage now spans Application Checklist plus Forms 1-6. Milestone 1 focus stays limited to active interview-critical fields while non-milestone entries remain metadata-only inventory coverage.
 - `getActiveFields(track, profile)` combines static `trackCondition` with profile-aware `isActive` predicates so Embassy 3-choice university sections, University single-choice sections, associate-degree education rows, and medical explanation rows can be toggled without embedding UI labels in validation logic.

@@ -13,6 +13,10 @@ describe('HomePage', () => {
       'href',
       '/interview',
     )
+    expect(screen.getByRole('link', { name: 'Essay drafts' })).toHaveAttribute(
+      'href',
+      '/interview/drafts',
+    )
     expect(
       screen.getByText('이 브라우저에 데이터가 로컬로 저장됩니다 (Milestone 1).'),
     ).toBeInTheDocument()

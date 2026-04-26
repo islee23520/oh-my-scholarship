@@ -52,102 +52,110 @@ export const isFieldAnswered = (profile: Partial<ApplicantProfile>, fieldId: Gks
   }
 }
 
-export const updateProfileField = (profile: Partial<ApplicantProfile>, fieldId: GksFieldId, value: any): Partial<ApplicantProfile> => {
+export const updateProfileField = (
+  profile: Partial<ApplicantProfile>,
+  fieldId: GksFieldId,
+  value: unknown,
+): Partial<ApplicantProfile> => {
+  const asString = (candidate: unknown) => (typeof candidate === 'string' ? candidate : String(candidate ?? ''))
+  const asStringArray = (candidate: unknown) =>
+    Array.isArray(candidate) ? candidate.map((entry) => asString(entry)) : [asString(candidate)]
+
   const p = JSON.parse(JSON.stringify(profile)) as Partial<ApplicantProfile>;
   switch (fieldId) {
-    case 'form1.section1.applicationTrack': p.applicationTrack = value; break;
-    case 'form1.section2.applicationType': p.applicationType = value; break;
-    case 'form1.section3.degree': p.degree = value; break;
-    case 'form1.section4.fieldOfStudy': p.fieldOfStudy = Array.isArray(value) ? value : [value]; break;
-    case 'form1.section5.familyName': p.fullNameEnglish = p.fullNameEnglish || {}; p.fullNameEnglish.familyName = value; break;
-    case 'form1.section5.givenName': p.fullNameEnglish = p.fullNameEnglish || {}; p.fullNameEnglish.givenName = value; break;
-    case 'form1.section5.middleName': p.fullNameEnglish = p.fullNameEnglish || {}; p.fullNameEnglish.middleName = value; break;
-    case 'form1.section5.dateOfBirth': p.dateOfBirth = value; break;
-    case 'form1.section5.gender': p.gender = value; break;
-    case 'form1.section5.citizenship': p.citizenship = value; break;
+    case 'form1.section1.applicationTrack': p.applicationTrack = value as ApplicantProfile['applicationTrack']; break;
+    case 'form1.section2.applicationType': p.applicationType = value as ApplicantProfile['applicationType']; break;
+    case 'form1.section3.degree': p.degree = value as ApplicantProfile['degree']; break;
+    case 'form1.section4.fieldOfStudy': p.fieldOfStudy = asStringArray(value); break;
+    case 'form1.section5.familyName': p.fullNameEnglish = p.fullNameEnglish || {}; p.fullNameEnglish.familyName = asString(value); break;
+    case 'form1.section5.givenName': p.fullNameEnglish = p.fullNameEnglish || {}; p.fullNameEnglish.givenName = asString(value); break;
+    case 'form1.section5.middleName': p.fullNameEnglish = p.fullNameEnglish || {}; p.fullNameEnglish.middleName = asString(value); break;
+    case 'form1.section5.dateOfBirth': p.dateOfBirth = asString(value); break;
+    case 'form1.section5.gender': p.gender = value as ApplicantProfile['gender']; break;
+    case 'form1.section5.citizenship': p.citizenship = asString(value); break;
     case 'form1.section5.koreanCitizenshipApplicant': p.koreanCitizenshipApplicant = value === 'yes' || value === true; break;
     case 'form1.section5.koreanCitizenshipParents': p.koreanCitizenshipParents = value === 'yes' || value === true; break;
-    case 'form1.section5.address': p.address = value; break;
-    case 'form1.section5.phone': p.phone = value; break;
-    case 'form1.section5.email': p.email = value; break;
-    case 'form1.section6.topikLevel': p.topikLevel = value; break;
-    case 'form1.section7.highSchoolName': p.education = p.education || {}; p.education.highSchoolName = value; break;
-    case 'form1.section7.highSchoolLocation': p.education = p.education || {}; p.education.highSchoolLocation = value; break;
-    case 'form1.section7.highSchoolPeriod': p.education = p.education || {}; p.education.highSchoolPeriod = value; break;
-    case 'form1.section7.highSchoolGraduationDate': p.education = p.education || {}; p.education.highSchoolGraduationDate = value; break;
-    case 'form1.section7.associateInstitutionName': p.education = p.education || {}; p.education.associateInstitutionName = value; break;
-    case 'form1.section7.associateInstitutionLocation': p.education = p.education || {}; p.education.associateInstitutionLocation = value; break;
-    case 'form1.section7.associateInstitutionPeriod': p.education = p.education || {}; p.education.associateInstitutionPeriod = value; break;
-    case 'form1.section7.associateInstitutionGraduationDate': p.education = p.education || {}; p.education.associateInstitutionGraduationDate = value; break;
+    case 'form1.section5.address': p.address = asString(value); break;
+    case 'form1.section5.phone': p.phone = asString(value); break;
+    case 'form1.section5.email': p.email = asString(value); break;
+    case 'form1.section6.topikLevel': p.topikLevel = value as ApplicantProfile['topikLevel']; break;
+    case 'form1.section7.highSchoolName': p.education = p.education || {}; p.education.highSchoolName = asString(value); break;
+    case 'form1.section7.highSchoolLocation': p.education = p.education || {}; p.education.highSchoolLocation = asString(value); break;
+    case 'form1.section7.highSchoolPeriod': p.education = p.education || {}; p.education.highSchoolPeriod = asString(value); break;
+    case 'form1.section7.highSchoolGraduationDate': p.education = p.education || {}; p.education.highSchoolGraduationDate = asString(value); break;
+    case 'form1.section7.associateInstitutionName': p.education = p.education || {}; p.education.associateInstitutionName = asString(value); break;
+    case 'form1.section7.associateInstitutionLocation': p.education = p.education || {}; p.education.associateInstitutionLocation = asString(value); break;
+    case 'form1.section7.associateInstitutionPeriod': p.education = p.education || {}; p.education.associateInstitutionPeriod = asString(value); break;
+    case 'form1.section7.associateInstitutionGraduationDate': p.education = p.education || {}; p.education.associateInstitutionGraduationDate = asString(value); break;
     case 'form1.section9.embassyChoice1.university': 
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[0].university = value; break;
+      p.universityChoices.embassyChoices[0].university = asString(value); break;
     case 'form1.section9.embassyChoice1.fieldOfStudy':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[0].fieldOfStudy = value; break;
+      p.universityChoices.embassyChoices[0].fieldOfStudy = asString(value); break;
     case 'form1.section9.embassyChoice1.department':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[0].department = value; break;
+      p.universityChoices.embassyChoices[0].department = asString(value); break;
     case 'form1.section9.embassyChoice1.other':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[0].other = value; break;
+      p.universityChoices.embassyChoices[0].other = asString(value); break;
     case 'form1.section9.embassyChoice2.university':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[1].university = value; break;
+      p.universityChoices.embassyChoices[1].university = asString(value); break;
     case 'form1.section9.embassyChoice2.fieldOfStudy':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[1].fieldOfStudy = value; break;
+      p.universityChoices.embassyChoices[1].fieldOfStudy = asString(value); break;
     case 'form1.section9.embassyChoice2.department':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[1].department = value; break;
+      p.universityChoices.embassyChoices[1].department = asString(value); break;
     case 'form1.section9.embassyChoice2.other':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[1].other = value; break;
+      p.universityChoices.embassyChoices[1].other = asString(value); break;
     case 'form1.section9.embassyChoice3.university':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[2].university = value; break;
+      p.universityChoices.embassyChoices[2].university = asString(value); break;
     case 'form1.section9.embassyChoice3.fieldOfStudy':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[2].fieldOfStudy = value; break;
+      p.universityChoices.embassyChoices[2].fieldOfStudy = asString(value); break;
     case 'form1.section9.embassyChoice3.department':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[2].department = value; break;
+      p.universityChoices.embassyChoices[2].department = asString(value); break;
     case 'form1.section9.embassyChoice3.other':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.embassyChoices = p.universityChoices.embassyChoices || [{}, {}, {}];
-      p.universityChoices.embassyChoices[2].other = value; break;
+      p.universityChoices.embassyChoices[2].other = asString(value); break;
     case 'form1.section9.universityChoice.university':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.universityChoice = p.universityChoices.universityChoice || {};
-      p.universityChoices.universityChoice.university = value; break;
+      p.universityChoices.universityChoice.university = asString(value); break;
     case 'form1.section9.universityChoice.fieldOfStudy':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.universityChoice = p.universityChoices.universityChoice || {};
-      p.universityChoices.universityChoice.fieldOfStudy = value; break;
+      p.universityChoices.universityChoice.fieldOfStudy = asString(value); break;
     case 'form1.section9.universityChoice.department':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.universityChoice = p.universityChoices.universityChoice || {};
-      p.universityChoices.universityChoice.department = value; break;
+      p.universityChoices.universityChoice.department = asString(value); break;
     case 'form1.section9.universityChoice.other':
       p.universityChoices = p.universityChoices || {};
       p.universityChoices.universityChoice = p.universityChoices.universityChoice || {};
-      p.universityChoices.universityChoice.other = value; break;
-    case 'form2.section1.personalStatement': p.form2PersonalStatement = value; break;
-    case 'form3.section1.languageStudyPlan': p.form3StudyPlan = p.form3StudyPlan || {}; p.form3StudyPlan.languageStudyPlan = value; break;
-    case 'form3.section2.goalStudyPlan': p.form3StudyPlan = p.form3StudyPlan || {}; p.form3StudyPlan.goalStudyPlan = value; break;
-    case 'form3.section3.futurePlan': p.form3StudyPlan = p.form3StudyPlan || {}; p.form3StudyPlan.futurePlan = value; break;
-    case 'form5.section1.consentGroup': p.form5ConsentGroup = p.form5ConsentGroup || {}; p.form5ConsentGroup.agreementsAccepted = Array.isArray(value) ? value : [value]; break;
+      p.universityChoices.universityChoice.other = asString(value); break;
+    case 'form2.section1.personalStatement': p.form2PersonalStatement = asString(value); break;
+    case 'form3.section1.languageStudyPlan': p.form3StudyPlan = p.form3StudyPlan || {}; p.form3StudyPlan.languageStudyPlan = asString(value); break;
+    case 'form3.section2.goalStudyPlan': p.form3StudyPlan = p.form3StudyPlan || {}; p.form3StudyPlan.goalStudyPlan = asString(value); break;
+    case 'form3.section3.futurePlan': p.form3StudyPlan = p.form3StudyPlan || {}; p.form3StudyPlan.futurePlan = asString(value); break;
+    case 'form5.section1.consentGroup': p.form5ConsentGroup = p.form5ConsentGroup || {}; p.form5ConsentGroup.agreementsAccepted = Array.isArray(value) ? value.map((entry) => Boolean(entry)) : [Boolean(value)]; break;
     case 'form6.section1.medicalChecklist': p.form6MedicalSample = p.form6MedicalSample || {}; p.form6MedicalSample.anyYes = value === 'yes' || value === true; break;
   }
   return p;

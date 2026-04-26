@@ -17,6 +17,8 @@ export type DraftFormType = 'form2' | 'form3'
 
 export type DraftMode = 'outline' | 'polished'
 
+export type DraftLanguage = 'korean' | 'english'
+
 export interface EssayFact {
   id: string
   label: string
@@ -29,7 +31,12 @@ export interface AIService {
     currentAnswer?: string,
     validationContext?: ValidationContext,
   ): Promise<string>
-  generateDraft(formType: DraftFormType, facts: EssayFact[], draftMode: DraftMode): Promise<string>
+  generateDraft(
+    formType: DraftFormType,
+    facts: EssayFact[],
+    draftMode: DraftMode,
+    language: DraftLanguage,
+  ): Promise<string>
 }
 
 export class ConsentRequiredError extends Error {
@@ -351,12 +358,25 @@ export class MockAIProvider implements AIService {
     return `다음 질문입니다. ${context.fieldLabel ?? fieldId} 항목을 위해 구체적으로 설명해 주세요.${answerSuffix}`
   }
 
-  async generateDraft(formType: DraftFormType, facts: EssayFact[], draftMode: DraftMode) {
+  async generateDraft(
+    formType: DraftFormType,
+    facts: EssayFact[],
+    draftMode: DraftMode,
+    language: DraftLanguage,
+  ) {
     const factSummary = facts.length > 0
       ? facts.map((fact) => `${fact.label}: ${fact.value}`).join(' | ')
       : '선택된 사실 없음'
 
-    return `모의 초안(${formType}/${draftMode}): ${factSummary}`
+    if (formType === 'form3') {
+      return language === 'english'
+        ? `Language Study Plan:\nBuild Korean fluency from the confirmed facts.\n\nGoal and Study Plan:\nDraft from confirmed facts only. ${factSummary}\n\nFuture Plan:\nConnect the study plan to a realistic future contribution.`
+        : `어학 계획:\n확인된 사실을 바탕으로 한국어 역량을 키우겠습니다.\n\n학업 목표 및 계획:\n확인된 사실만으로 작성한 초안입니다. ${factSummary}\n\n졸업 후 계획:\n배운 내용을 바탕으로 현실적인 기여 계획을 세우겠습니다.`
+    }
+
+    return language === 'english'
+      ? `Mock draft (${formType}/${draftMode}): ${factSummary}`
+      : `모의 초안(${formType}/${draftMode}): ${factSummary}`
   }
 }
 
@@ -382,11 +402,18 @@ export class OpenAIProvider implements AIService {
     return this.requestText(prompt)
   }
 
-  async generateDraft(formType: DraftFormType, facts: EssayFact[], draftMode: DraftMode) {
+  async generateDraft(
+    formType: DraftFormType,
+    facts: EssayFact[],
+    draftMode: DraftMode,
+    language: DraftLanguage,
+  ) {
     const prompt = {
-      task: 'Generate a Korean scholarship essay draft from explicitly selected facts only.',
+      task:
+        'Generate a scholarship essay draft from explicitly selected facts only. Do not invent facts. Do not claim guaranteed admission, guaranteed acceptance, certainty, or 100% success.',
       formType,
       draftMode,
+      language,
       facts,
     }
 
@@ -441,6 +468,7 @@ export interface DraftRequest {
   formType: DraftFormType
   facts: EssayFact[]
   draftMode: DraftMode
+  language: DraftLanguage
 }
 
 export interface InterviewResult {
@@ -492,6 +520,7 @@ export class ConsentGatedAIAdapter {
       request.formType,
       sanitizedFacts,
       request.draftMode,
+      request.language,
     )
 
     return {

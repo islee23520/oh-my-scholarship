@@ -32,7 +32,6 @@ export interface CompletionReport {
   readyForDocxProof: boolean
 }
 
-const ENGLISH_ONLY_PATTERN = /^[\x00-\x7F]*$/
 const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -190,7 +189,9 @@ export const validateEnglishOnly = (value: unknown): ValidationErrorCode[] => {
     return []
   }
 
-  return strings.every((entry) => ENGLISH_ONLY_PATTERN.test(entry)) ? [] : ['ENGLISH_ONLY']
+  return strings.every((entry) => [...entry].every((character) => character.charCodeAt(0) <= 0x7f))
+    ? []
+    : ['ENGLISH_ONLY']
 }
 
 export const validateDateFormat = (value: unknown): ValidationErrorCode[] => {
@@ -220,12 +221,8 @@ export const validateEmailFormat = (value: unknown): ValidationErrorCode[] => {
   return EMAIL_PATTERN.test(value) ? [] : ['INVALID_EMAIL']
 }
 
-export const validateRequired = (
-  value: unknown,
-  _fieldId: GksFieldId,
-): ValidationErrorCode[] => {
-  return hasMeaningfulValue(value) ? [] : ['REQUIRED']
-}
+export const validateRequired = (value: unknown): ValidationErrorCode[] =>
+  hasMeaningfulValue(value) ? [] : ['REQUIRED']
 
 export const validateLanguagePolicy = (
   value: unknown,
@@ -253,11 +250,11 @@ export const getPhoneCountryCodeHint = (value: unknown): string | null => {
 }
 
 export const validateField = (
-  fieldId: GksFieldId,
+  _fieldId: GksFieldId,
   value: unknown,
   field: GksField,
 ): FieldValidationResult => {
-  const requiredErrors = field.status === 'required' ? validateRequired(value, fieldId) : []
+  const requiredErrors = field.status === 'required' ? validateRequired(value) : []
 
   if (requiredErrors.length > 0) {
     return {

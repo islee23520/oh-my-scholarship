@@ -14,6 +14,9 @@ export default function HomePage() {
             <Link href="/interview">Interview</Link>
           </li>
           <li>
+            <Link href="/interview/drafts">Essay drafts</Link>
+          </li>
+          <li>
             <Link href="/report">Report</Link>
           </li>
           <li>

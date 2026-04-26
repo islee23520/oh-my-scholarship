@@ -10,6 +10,7 @@ const defaultIgnoreDirs = new Set([
   '.next',
   'node_modules',
   'coverage',
+  '.generated',
   'playwright-report',
   'test-results',
   '.sisyphus',

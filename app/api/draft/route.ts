@@ -1,18 +1,19 @@
 import { NextResponse } from 'next/server'
 
-import {
-  ConsentGatedAIAdapter,
-  ConsentRequiredError,
-  type DraftRequest,
-} from '@/lib/ai-adapter'
-
-const adapter = new ConsentGatedAIAdapter()
+import { ConsentRequiredError } from '@/lib/ai-adapter'
+import { generateDraft, type DraftRequestBody } from '@/lib/essay-draft-service'
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as DraftRequest
+  const body = (await request.json()) as DraftRequestBody
 
   try {
-    const result = await adapter.generateEssayDraft(body)
+    const result = await generateDraft(
+      body.fieldId,
+      body.profile ?? {},
+      body.userBullets,
+      body.language,
+      body.consent,
+    )
 
     return NextResponse.json(result)
   } catch (error) {
@@ -23,6 +24,16 @@ export async function POST(request: Request) {
           message: error.message,
         },
         { status: 403 },
+      )
+    }
+
+    if (error instanceof Error && /Unsupported draft field ID|Unknown field ID|validation/i.test(error.message)) {
+      return NextResponse.json(
+        {
+          error: 'INVALID_DRAFT_REQUEST',
+          message: error.message,
+        },
+        { status: 400 },
       )
     }
 

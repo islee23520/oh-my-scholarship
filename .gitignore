@@ -11,6 +11,7 @@ evidence/
 out/
 outputs/
 generated/
+.generated/
 generated-docx/
 docx-output/
 *.docx

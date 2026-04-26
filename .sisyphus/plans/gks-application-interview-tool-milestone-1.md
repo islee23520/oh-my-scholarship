@@ -320,7 +320,7 @@ Final Wave: F1-F4 verification agents in parallel
 
   **Commit**: YES | Message: `feat(interview): add one question web flow` | Files: interview engine, UI route, tests
 
-- [ ] 6. Implement validation and completion report
+- [x] 6. Implement validation and completion report
 
   **What to do**: Implement deterministic validation for required fields, track conditions, date format `YYYY-MM-DD`, email format, phone country-code hint, English-only FORM 1 fields, and missing/invalid/complete statuses. Add a report route showing missing fields, invalid fields, skipped fields, and ready-for-DOCX-proof status. Add tests for English-only failure, FORM 2/3 language allowance, invalid dates/emails, missing required fields, and conditional track report accuracy.
   **Must NOT do**: Do not mark an application “officially ready to submit”; only mark “ready for Milestone 1 DOCX proof”. Do not use LLM for validation decisions.

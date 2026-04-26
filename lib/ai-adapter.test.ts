@@ -17,11 +17,12 @@ class RecordingProvider implements AIService {
     validationContext?: ValidationContext
   }> = []
 
-  draftCalls: Array<{
-    formType: DraftFormType
-    facts: EssayFact[]
-    draftMode: DraftMode
-  }> = []
+    draftCalls: Array<{
+      formType: DraftFormType
+      facts: EssayFact[]
+      draftMode: DraftMode
+      language: 'korean' | 'english'
+    }> = []
 
   async generateNextQuestion(
     fieldId: GksFieldId,
@@ -32,8 +33,13 @@ class RecordingProvider implements AIService {
     return '기록된 다음 질문'
   }
 
-  async generateDraft(formType: DraftFormType, facts: EssayFact[], draftMode: DraftMode) {
-    this.draftCalls.push({ formType, facts, draftMode })
+  async generateDraft(
+    formType: DraftFormType,
+    facts: EssayFact[],
+    draftMode: DraftMode,
+    language: 'korean' | 'english',
+  ) {
+    this.draftCalls.push({ formType, facts, draftMode, language })
     return '기록된 초안'
   }
 }
@@ -108,6 +114,7 @@ describe('ai-adapter', () => {
       consent: true,
       formType: 'form2',
       draftMode: 'outline',
+      language: 'korean',
       facts: [
         { id: 'fact-1', label: '동기', value: '기술로 공공문제를 해결하고 싶음' },
         { id: 'fact-2', label: '경험', value: '청소년 데이터 봉사활동 2년' },
@@ -118,6 +125,7 @@ describe('ai-adapter', () => {
       {
         formType: 'form2',
         draftMode: 'outline',
+        language: 'korean',
         facts: [
           { id: 'fact-1', label: '동기', value: '기술로 공공문제를 해결하고 싶음' },
           { id: 'fact-2', label: '경험', value: '청소년 데이터 봉사활동 2년' },

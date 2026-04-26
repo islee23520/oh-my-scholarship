@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { selectNextQuestion, isFieldAnswered, updateProfileField, getDeterministicKoreanQuestion } from './interview-engine'
-import type { ApplicantProfile } from './gks-schema'
+import type { ApplicantProfile, GksField } from './gks-schema'
 
 describe('interview-engine', () => {
   describe('selectNextQuestion', () => {
@@ -99,7 +99,7 @@ describe('interview-engine', () => {
 
   describe('getDeterministicKoreanQuestion', () => {
     it('returns a formatted string', () => {
-      const field = { fieldLabel: 'Test Label' } as any
+      const field = { fieldLabel: 'Test Label' } as GksField
       expect(getDeterministicKoreanQuestion(field)).toBe('다음으로 Test Label 항목을 입력해 주세요.')
     })
   })
