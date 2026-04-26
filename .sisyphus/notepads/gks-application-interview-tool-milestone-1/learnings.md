@@ -567,3 +567,11 @@ __fixtures__/generated/
 - Created a deterministic Korean question fallback for when the AI service fails.
 - Built the interview UI with a consent screen, track selection, and one-question-at-a-time flow.
 - Wrote Playwright tests to verify the flow and the AI fallback behavior.
+
+## 2026-04-26 Task 6 Validation and completion report
+- Added `lib/validation.ts` as the deterministic validation layer for Milestone 1, with schema-driven `validateField()` and `generateCompletionReport()` using `getMilestoneFields(track, profile)` so track/profile conditions stay in one source of truth.
+- English-only enforcement is ASCII-only by design (`ENGLISH_ONLY`), which correctly rejects Korean/CJK input for Form 1 while allowing Form 2/3 Korean drafts because those fields use `korean-or-english` in the schema.
+- Completion reporting classifies milestone fields into `missing`, `invalid`, and `skipped`; `skipped` is derived from inactive milestone fields rather than empty values, which keeps embassy/university conditional rows out of false-missing lists.
+- `readyForDocxProof` intentionally means all active required Milestone 1 fields are present and valid; it is not a final submission readiness flag.
+- Report UI now reads the saved browser profile through `ProfileStore`, shows Milestone 1 DOCX proof readiness, and adds a non-blocking phone country-code hint when the saved phone value does not start with `+`.
+- Verification passed for Task 6: zero LSP diagnostics on `lib/validation.ts`, `lib/validation.test.ts`, and `app/report/page.tsx`; `npm run test -- --run validation`; `npm run test -- --run`; `npx tsc --noEmit`; `npm run build`.
