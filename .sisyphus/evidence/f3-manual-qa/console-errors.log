@@ -1,0 +1,6 @@
+Total messages: 2 (Errors: 0, Warnings: 0)
+Returning 3 messages for level "error"
+
+[ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3000/api/interview:0
+[ERROR] Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. admission guarantee claim @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[ERROR] Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. admission guarantee claim @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272

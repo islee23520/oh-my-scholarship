@@ -1,0 +1,14 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - heading "oh-my-scholarship" [level=1] [ref=e3]
+    - paragraph [ref=e4]: Milestone 1 bootstrap is ready.
+    - paragraph [ref=e5]: 이 브라우저에 데이터가 로컬로 저장됩니다 (Milestone 1).
+    - navigation "Primary" [ref=e6]:
+      - list [ref=e7]:
+        - listitem [ref=e8]
+        - listitem [ref=e10]
+        - listitem [ref=e12]
+        - listitem [ref=e14]
+  - button "Open Next.js Dev Tools" [ref=e22] [cursor=pointer]:
+    - img [ref=e23]
+  - alert [ref=e16]

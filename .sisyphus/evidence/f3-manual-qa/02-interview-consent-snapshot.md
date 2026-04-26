@@ -1,0 +1,10 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - heading "인터뷰 시작" [level=1] [ref=e3]
+    - generic [ref=e4]:
+      - checkbox "개인정보 수집 및 AI 활용에 동의합니다." [ref=e5]
+      - text: 개인정보 수집 및 AI 활용에 동의합니다.
+    - button "시작하기" [disabled] [ref=e6]
+  - button "Open Next.js Dev Tools" [ref=e12] [cursor=pointer]:
+    - img [ref=e13]
+  - alert [ref=e16]
