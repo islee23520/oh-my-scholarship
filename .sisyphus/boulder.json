@@ -59,6 +59,15 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-04-26T04:17:49.549Z"
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "Implement one-question interview UI and engine",
+      "session_id": "ses_237fcb3ccffeDreFsIgQfUct26",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "updated_at": "2026-04-26T04:22:52.610Z"
     }
   }
 }

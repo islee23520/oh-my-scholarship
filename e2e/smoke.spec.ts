@@ -5,7 +5,7 @@ test('home and placeholder routes load', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'oh-my-scholarship' })).toBeVisible()
 
   await page.goto('/interview')
-  await expect(page.getByRole('heading', { name: 'Interview' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '인터뷰 시작' })).toBeVisible()
 
   await page.goto('/report')
   await expect(page.getByRole('heading', { name: 'Report' })).toBeVisible()

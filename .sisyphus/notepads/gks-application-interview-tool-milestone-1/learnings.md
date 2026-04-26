@@ -560,3 +560,10 @@ __fixtures__/generated/
 - Privacy scan excludes `.sisyphus/` entirely because notepad/plan files contain pattern examples as documentation text
 - Privacy scan excludes `__fixtures__/` by default; explicit CLI args bypass ignore for proof-of-detection
 - Next.js auto-updated tsconfig.json: `jsx` → `react-jsx`, added `.next/dev/types/**/*.ts` include, added `next` plugin
+
+## Task 5: Implement one-question interview UI/engine
+- Implemented `selectNextQuestion` to find the first unanswered required field from active milestone fields.
+- Used `updateProfileField` to handle nested profile updates using JSON parse/stringify for deep copy.
+- Created a deterministic Korean question fallback for when the AI service fails.
+- Built the interview UI with a consent screen, track selection, and one-question-at-a-time flow.
+- Wrote Playwright tests to verify the flow and the AI fallback behavior.

@@ -278,7 +278,7 @@ Final Wave: F1-F4 verification agents in parallel
 
   **Commit**: YES | Message: `feat(profile): add single local applicant profile` | Files: profile store, UI controls, tests
 
-- [ ] 5. Implement one-question interview UI and engine
+- [x] 5. Implement one-question interview UI and engine
 
   **What to do**: Build interview route with Korean UI. First ask for consent and application track. Then use deterministic schema gap selection to display exactly one next question at `[data-testid="next-question"]`. Support answer entry, skip, correction, and next. Branch Embassy/University Track fields according to schema. Use AI only to phrase the current question when consent is true; fallback to deterministic Korean question text if AI fails. Add UI tests and Playwright tests proving one-question behavior and AI failure fallback.
   **Must NOT do**: Do not display a full long form as the primary interaction. Do not ask irrelevant track-specific fields. Do not infer unstated values from user answers.

@@ -165,3 +165,7 @@ Multiple synchronous `task()` delegations for Task 1 aborted before making file 
 - **Gotcha**: Hand-crafted ICO with raw BMP pixel data failed Turbopack validation ("Bitmap header too small"). ICO wrapping PNG data works, but the ICO header dimensions must match the inner PNG dimensions exactly or Turbopack rejects it ("Entry(N, N) and PNG(M, M) dimensions do not match").
 - **Impact**: `/favicon.ico` and `/icon.png` both return 200; browser console is clean.
 
+
+## Task 5: Implement one-question interview UI/engine
+- Encountered a type error when passing `nextField.id` to `InterviewRequest` because `GksField.id` is typed as `string` instead of `GksFieldId`. Fixed by casting `as GksFieldId`.
+- The smoke test failed because the heading on the `/interview` page changed from "Interview" to "인터뷰 시작". Updated the smoke test to expect the new heading.
