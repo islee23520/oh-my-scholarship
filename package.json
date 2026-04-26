@@ -1,40 +1,37 @@
 {
-  "name": "oh-my-scholarship",
-  "private": true,
+  "name": "gks-for-u",
   "version": "0.1.0",
-  "type": "module",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "vitest",
-    "test:e2e": "playwright test",
-    "privacy:scan": "node scripts/privacy-scan.js",
-    "lint": "eslint ."
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.91.1",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.104.1",
+    "docx": "^9.6.1",
     "jszip": "^3.10.1",
-    "next": "^16.0.5",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "zustand": "^5.0.12"
+    "next": "16.2.4",
+    "pdf-lib": "^1.17.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.0",
-    "@next/eslint-plugin-next": "^16.0.5",
-    "@playwright/test": "^1.58.0",
-    "@tailwindcss/postcss": "^4.2.4",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "eslint": "^9.39.0",
-    "globals": "^16.5.0",
-    "jsdom": "^27.1.0",
-    "tailwindcss": "^4.2.4",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.47.0",
-    "vitest": "^4.0.13"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/ui": "^4.1.5",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^4.1.5"
   }
 }
