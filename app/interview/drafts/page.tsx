@@ -161,8 +161,8 @@ export default function DraftsPage() {
             <div role="alert">
               <p>안전 경고: 아래 표현은 삭제하거나 수정해야 합니다.</p>
               <ul>
-                {safetyFlags.map((flag) => (
-                  <li key={flag}>{flag}</li>
+                {safetyFlags.map((flag, index) => (
+                  <li key={`${flag}-${index}`}>{flag}</li>
                 ))}
               </ul>
             </div>

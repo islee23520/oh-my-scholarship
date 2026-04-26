@@ -12,6 +12,7 @@ export default function InterviewPage() {
   const [profile, setProfile] = useState<Partial<ApplicantProfile>>({})
   const [hasConsent, setHasConsent] = useState(false)
   const [isStarted, setIsStarted] = useState(false)
+  const [isResetConfirmationOpen, setIsResetConfirmationOpen] = useState(false)
   
   const [currentField, setCurrentField] = useState<GksField | null>(null)
   const [questionText, setQuestionText] = useState<string>('')
@@ -26,6 +27,20 @@ export default function InterviewPage() {
 
   const handleStart = () => {
     setIsStarted(true)
+  }
+
+  const handleResetProfile = () => {
+    profileStore.reset()
+    setProfile({})
+    setHasConsent(false)
+    setIsStarted(false)
+    setIsResetConfirmationOpen(false)
+    setCurrentField(null)
+    setQuestionText('')
+    setIsAiFallback(false)
+    setAnswer('')
+    setIsLoading(false)
+    setIsComplete(false)
   }
 
   const handleTrackSelect = (track: ApplicationTrack) => {
@@ -94,6 +109,29 @@ export default function InterviewPage() {
     await loadNextQuestion(updatedProfile)
   }
 
+  const renderResetControls = () => (
+    <div>
+      <button
+        type="button"
+        data-testid="reset-profile"
+        onClick={() => setIsResetConfirmationOpen(true)}
+      >
+        프로필 초기화
+      </button>
+      {isResetConfirmationOpen ? (
+        <div>
+          <p>저장된 프로필을 초기화할까요?</p>
+          <button type="button" data-testid="confirm-reset" onClick={handleResetProfile}>
+            초기화
+          </button>
+          <button type="button" onClick={() => setIsResetConfirmationOpen(false)}>
+            취소
+          </button>
+        </div>
+      ) : null}
+    </div>
+  )
+
   if (!isStarted) {
     return (
       <main>
@@ -115,6 +153,7 @@ export default function InterviewPage() {
         >
           시작하기
         </button>
+        {renderResetControls()}
       </main>
     )
   }
@@ -125,6 +164,7 @@ export default function InterviewPage() {
         <h1>지원 트랙 선택</h1>
         <button onClick={() => handleTrackSelect('embassy')}>대사관 트랙 (Embassy Track)</button>
         <button onClick={() => handleTrackSelect('university')}>대학 트랙 (University Track)</button>
+        {renderResetControls()}
       </main>
     )
   }
@@ -134,6 +174,7 @@ export default function InterviewPage() {
       <main>
         <h1>인터뷰 완료</h1>
         <p>모든 질문에 답변하셨습니다. 감사합니다.</p>
+        {renderResetControls()}
       </main>
     )
   }
@@ -141,6 +182,7 @@ export default function InterviewPage() {
   return (
     <main>
       <h1>인터뷰 진행 중</h1>
+      {renderResetControls()}
       {isLoading ? (
         <p>질문을 준비 중입니다...</p>
       ) : currentField ? (
