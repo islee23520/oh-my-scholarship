@@ -157,7 +157,7 @@ Final Wave: F1-F4 verification agents in parallel
 
   **Commit**: YES | Message: `chore(app): bootstrap web app verification baseline` | Files: root config, app scaffold, test config, privacy scan script
 
-- [ ] 2. Build 2026 GKS-U schema and field inventory foundation
+- [x] 2. Build 2026 GKS-U schema and field inventory foundation
 
   **What to do**: Create a canonical schema module for the supplied 2026 GKS-U forms. Define stable field IDs, form number, source label, required/optional status, language policy, track condition, field type, and validation metadata. Include inventory coverage for Application Checklist and Forms 1-6. Implement active Milestone 1 fields for: application track, application type, degree, field of study, full English name, DOB, gender, citizenship, Korean citizenship yes/no, contact info, language scores, education, university choices, one FORM 2 prompt group, one FORM 3 prompt group, FORM 5 consent checkbox group, and FORM 6 yes/no medical sample. Add unit tests for duplicate IDs and conditional activation.
   **Must NOT do**: Do not hardcode UI labels inside validation logic. Do not treat inventory coverage as full DOCX completion support.

@@ -32,6 +32,15 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-04-26T03:46:57.497Z"
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "Build 2026 GKS-U schema and field inventory foundation",
+      "session_id": "ses_2380ec12bffe4THNyNnGttot3h",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-04-26T04:06:48.248Z"
     }
   }
 }

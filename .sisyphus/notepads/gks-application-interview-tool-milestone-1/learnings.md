@@ -204,6 +204,14 @@ project-root/
 - `npm run e2e:ui` — Run Playwright with UI Mode
 - `npm run build && npm run start` — Production build + server
 
+## 2026-04-26 Task 2 Schema Foundation
+
+- Added `lib/gks-schema.ts` as the canonical 2026 GKS-U schema inventory module with strict exported types (`GksField`, `GksFieldId`, `ApplicantProfile`, `LanguagePolicy`, `TrackCondition`, `FieldStatus`) and pure TypeScript helpers only.
+- Inventory coverage now spans Application Checklist plus Forms 1-6. Milestone 1 focus stays limited to active interview-critical fields while non-milestone entries remain metadata-only inventory coverage.
+- `getActiveFields(track, profile)` combines static `trackCondition` with profile-aware `isActive` predicates so Embassy 3-choice university sections, University single-choice sections, associate-degree education rows, and medical explanation rows can be toggled without embedding UI labels in validation logic.
+- `npm run test -- --run schema` initially failed because Vitest in this repo does not yet resolve the `@/*` tsconfig alias automatically through Vite config. Using a relative import in `lib/gks-schema.test.ts` fixed the issue without changing Task 1 config.
+- Verification passed for the new schema module: zero LSP diagnostics on modified files, `npm run test -- --run schema`, `npm run test -- --run`, and `npm run build`.
+
 ### Gotchas & Compatibility Notes
 
 1. **Vitest + jsdom + Next.js**: Vitest's jsdom environment does NOT include Next.js server-side features (Server Components, Route Handlers, etc.). Use Vitest for unit/component tests only; use Playwright for full-stack e2e.
@@ -540,4 +548,3 @@ __fixtures__/generated/
 - Privacy scan excludes `.sisyphus/` entirely because notepad/plan files contain pattern examples as documentation text
 - Privacy scan excludes `__fixtures__/` by default; explicit CLI args bypass ignore for proof-of-detection
 - Next.js auto-updated tsconfig.json: `jsx` → `react-jsx`, added `.next/dev/types/**/*.ts` include, added `next` plugin
-
