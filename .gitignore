@@ -1,0 +1,16 @@
+.env
+.env.local
+.env.*
+node_modules/
+.next/
+coverage/
+playwright-report/
+test-results/
+.sisyphus/evidence/
+evidence/
+out/
+outputs/
+generated/
+generated-docx/
+docx-output/
+*.docx

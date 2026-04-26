@@ -1,0 +1,37 @@
+{
+  "active_plan": "/Users/ilseoblee/workspace/tool/oh-my-scholarship/.sisyphus/plans/gks-application-interview-tool-milestone-1.md",
+  "started_at": "2026-04-26T03:18:27.241Z",
+  "session_ids": [
+    "ses_2384318c2ffeyQ626J2UMFmeDo",
+    "ses_23830e2cfffeVM26nedpvspPEB",
+    "ses_23830e2ceffeAEebLeFVT9bytN",
+    "ses_23826c454ffei7e88RiYffUB5I",
+    "ses_23824272affeCdHLsNLwlrB07t",
+    "ses_2382426efffeFY64jfi6lnHOk0",
+    "ses_2382426efffclKoSm6dy3LT4XA",
+    "ses_2382426daffeGKWEnhJ5xpuAeD"
+  ],
+  "session_origins": {
+    "ses_2384318c2ffeyQ626J2UMFmeDo": "direct",
+    "ses_23830e2cfffeVM26nedpvspPEB": "appended",
+    "ses_23830e2ceffeAEebLeFVT9bytN": "appended",
+    "ses_23826c454ffei7e88RiYffUB5I": "direct",
+    "ses_23824272affeCdHLsNLwlrB07t": "appended",
+    "ses_2382426efffeFY64jfi6lnHOk0": "appended",
+    "ses_2382426efffclKoSm6dy3LT4XA": "appended",
+    "ses_2382426daffeGKWEnhJ5xpuAeD": "appended"
+  },
+  "plan_name": "gks-application-interview-tool-milestone-1",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Bootstrap Next.js web app and verification baseline",
+      "session_id": "ses_23821e944ffefhVTyJIMkcmOgI",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-26T03:46:57.497Z"
+    }
+  }
+}
